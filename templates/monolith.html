@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monolith — Studio Template</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#efede8;--ink:#121212;--mute:#6f6c66;--line:#d4d0c8;--accent:#ff4d1f;--ease:cubic-bezier(.7,0,.2,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1320px,100% - 32px);margin-inline:auto}
+nav{position:fixed;inset:0 0 auto;z-index:20;padding:20px 0;mix-blend-mode:difference;color:#fff}
+nav .wrap{display:flex;justify-content:space-between;font-size:14px;text-transform:uppercase;letter-spacing:.06em}
+nav .r{display:flex;gap:24px}
+
+/* curtain intro */
+.curtain{position:fixed;inset:0;display:grid;grid-template-columns:repeat(5,1fr);z-index:50;pointer-events:none}
+.curtain i{background:var(--ink);transform-origin:top;animation:cur 1s var(--ease) forwards}
+.curtain i:nth-child(2){animation-delay:.06s}.curtain i:nth-child(3){animation-delay:.12s}.curtain i:nth-child(4){animation-delay:.18s}.curtain i:nth-child(5){animation-delay:.24s}
+@keyframes cur{to{transform:scaleY(0)}}
+
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:120px 0 32px}
+.big{font-size:clamp(64px,17vw,280px);font-weight:700;line-height:.82;letter-spacing:-.06em;text-transform:uppercase}
+.big .row{display:flex;overflow:hidden}
+.big .ch{display:inline-block;transform:translateY(105%);animation:rise .9s var(--ease) forwards}
+@keyframes rise{to{transform:none}}
+.hero-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:40px;border-top:1px solid var(--line);padding-top:20px;font-size:15px;color:var(--mute)}
+.hero-meta b{color:var(--ink);font-weight:500}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--accent);margin-right:8px;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{transform:scale(1.6);opacity:.4}}
+@media(max-width:700px){.hero-meta{grid-template-columns:1fr}}
+
+/* image mask reveal */
+.mask{height:220vh;position:relative}
+.mask-in{position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden}
+.mask-box{width:30vw;height:40vh;border-radius:16px;background:
+  radial-gradient(circle at 30% 30%,#ff8a5c,transparent 50%),radial-gradient(circle at 70% 70%,#2a2a2a,transparent 60%),linear-gradient(135deg,#ff4d1f,#121212);
+  will-change:width,height,border-radius}
+.mask-label{position:absolute;color:#fff;font-size:clamp(28px,5vw,72px);font-weight:700;letter-spacing:-.04em;text-transform:uppercase;text-shadow:0 2px 30px rgba(0,0,0,.4)}
+
+/* stacked cards */
+.stack{padding:120px 0}
+.stack h2,.sec-title{font-size:clamp(40px,7vw,110px);font-weight:700;letter-spacing:-.05em;line-height:.9;text-transform:uppercase;margin-bottom:64px}
+.scard{position:sticky;top:12vh;height:72vh;border-radius:24px;padding:clamp(24px,4vw,48px);display:flex;flex-direction:column;justify-content:space-between;margin-bottom:6vh;color:#fff;transform-origin:center top}
+.scard:nth-child(1){background:#121212}.scard:nth-child(2){background:#ff4d1f}.scard:nth-child(3){background:#3d3a35}.scard:nth-child(4){background:#1f3b34}
+.scard .top{display:flex;justify-content:space-between;font-size:14px;text-transform:uppercase;letter-spacing:.08em;opacity:.8}
+.scard h3{font-size:clamp(40px,8vw,128px);font-weight:700;letter-spacing:-.05em;line-height:.85;text-transform:uppercase}
+.scard p{max-width:420px;opacity:.85}
+
+/* list hover */
+.list a{display:grid;grid-template-columns:80px 1fr auto;align-items:center;gap:16px;padding:28px 0;border-top:1px solid var(--line);font-size:clamp(24px,4vw,56px);font-weight:500;letter-spacing:-.03em;position:relative;overflow:hidden;transition:color .5s var(--ease),padding .5s var(--ease)}
+.list a:last-child{border-bottom:1px solid var(--line)}
+.list a::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleY(0);transform-origin:bottom;transition:transform .5s var(--ease);z-index:-1}
+.list a:hover{color:var(--bg);padding-left:24px}
+.list a:hover::before{transform:none}
+.list small{font-size:14px;color:var(--mute)}
+.list span:last-child{font-size:14px;text-transform:uppercase;letter-spacing:.08em}
+.list{position:relative;z-index:0;padding-bottom:120px}
+
+footer{background:var(--ink);color:var(--bg);padding:120px 0 32px}
+footer .big{font-size:clamp(56px,14vw,220px)}
+footer .row2{display:flex;justify-content:space-between;margin-top:64px;font-size:14px;color:#999;flex-wrap:wrap;gap:16px}
+.cta{display:inline-flex;margin-top:40px;padding:18px 32px;border-radius:999px;background:var(--accent);color:#fff;font-weight:500;transition:transform .3s}
+.cta:hover{transform:scale(1.05) rotate(-2deg)}
+
+.rv{opacity:0;transform:translateY(60px);transition:1s var(--ease)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.big .ch,.rv{transform:none;opacity:1}.curtain{display:none}}
+</style>
+</head>
+<body>
+<div class="curtain"><i></i><i></i><i></i><i></i><i></i></div>
+<nav><div class="wrap"><span>Monolith®</span><div class="r"><a href="#work">Work</a><a href="#services">Services</a><a href="#contact">Contact</a></div></div></nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="big" id="split"><div class="row">Make it</div><div class="row">Matter</div></div>
+    <div class="hero-meta">
+      <div><span class="dot"></span><b>Available</b> for new projects</div>
+      <div>Independent studio for brand, web &amp; motion.</div>
+      <div style="text-align:right">Scroll ↓</div>
+    </div>
+  </div>
+</header>
+
+<div class="mask" id="mask"><div class="mask-in"><div class="mask-box" id="box"></div><div class="mask-label">Showreel 2026</div></div></div>
+
+<section class="stack" id="services">
+  <div class="wrap">
+    <h2 class="rv">What we do</h2>
+    <div id="cards">
+      <div class="scard"><div class="top"><span>01</span><span>Strategy</span></div><div><h3>Brand</h3><p>Positioning, naming and identity systems that hold up everywhere.</p></div></div>
+      <div class="scard"><div class="top"><span>02</span><span>Design</span></div><div><h3>Web</h3><p>Fast, animated websites that turn visitors into enquiries.</p></div></div>
+      <div class="scard"><div class="top"><span>03</span><span>Motion</span></div><div><h3>Film</h3><p>Launch films, social cuts and product animation.</p></div></div>
+      <div class="scard"><div class="top"><span>04</span><span>Growth</span></div><div><h3>Ads</h3><p>Creative testing for paid social, built around results.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="list" id="work">
+  <div class="wrap">
+    <h2 class="sec-title rv">Selected work</h2>
+    <a href="#"><small>2026</small>Northwind Hotels<span>Brand · Web</span></a>
+    <a href="#"><small>2026</small>Field Coffee<span>Packaging</span></a>
+    <a href="#"><small>2025</small>Atlas Mobility<span>Web · Motion</span></a>
+    <a href="#"><small>2025</small>Kiln Studio<span>Identity</span></a>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="big rv">Let's talk</div>
+    <a class="cta" href="mailto:hello@example.com">hello@example.com →</a>
+    <div class="row2"><span>© Monolith Studio</span><span>Instagram · LinkedIn · Behance</span></div>
+  </div>
+</footer>
+
+<script>
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* split letters */
+document.querySelectorAll("#split .row").forEach((r, ri) => {
+  r.innerHTML = [...r.textContent].map((c, i) =>
+    `<span class="ch" style="animation-delay:${.7 + ri*.1 + i*.035}s">${c === " " ? "&nbsp;" : c}</span>`).join("");
+});
+/* reveal */
+const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add("in")), {threshold:.2});
+document.querySelectorAll(".rv").forEach(el => io.observe(el));
+/* scroll */
+const mask = document.getElementById("mask"), box = document.getElementById("box"), cards = [...document.querySelectorAll(".scard")];
+function tick(){
+  const vh = innerHeight;
+  const r = mask.getBoundingClientRect();
+  const k = Math.min(Math.max(-r.top / (r.height - vh), 0), 1);
+  box.style.width = (30 + k * 70) + "vw";
+  box.style.height = (40 + k * 60) + "vh";
+  box.style.borderRadius = (16 * (1 - k)) + "px";
+  cards.forEach((c, i) => {
+    const next = cards[i + 1]; if (!next) return;
+    const nr = next.getBoundingClientRect();
+    const p = Math.min(Math.max(1 - (nr.top - vh * .12) / (vh * .7), 0), 1);
+    c.style.transform = `scale(${1 - p * .08})`;
+    c.style.filter = `brightness(${1 - p * .4})`;
+  });
+}
+if (!reduce){ addEventListener("scroll", () => requestAnimationFrame(tick), {passive:true}); tick(); }
+</script>
+</body>
+</html>
